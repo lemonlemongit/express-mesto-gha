@@ -8,8 +8,8 @@ module.exports.createUser = (req, res) => {
     .then((user) => {
       res.status(OK).send(user);
     })
-    .catch((error) => {
-      res.status(INTERNAL_SERVER_ERROR).send({ message: `На сервере произошла ошибка: ${error}` });
+    .catch((err) => {
+      res.status(INTERNAL_SERVER_ERROR).send({ message: `На сервере произошла ошибка: ${err}` });
     });
 };
 
@@ -24,7 +24,7 @@ module.exports.getUsers = (req, res) => {
         res.status(NOT_FOUND).send({ message: "Пользователь не найден" });
         return;
       }
-      res.status(INTERNAL_SERVER_ERROR).send({ message: `На сервере произошла ошибка: ${error}` });
+      res.status(INTERNAL_SERVER_ERROR).send({ message: `На сервере произошла ошибка: ${err}` });
     });
 };
 
@@ -42,7 +42,7 @@ module.exports.getUserById = (req, res) => {
       if (err.path === "_id") {
         res.status(BAD_REQUEST).send({ message: "Пользователь c таким id не найден" });
       } else {
-        res.status(INTERNAL_SERVER_ERROR).send({ message: `На сервере произошла ошибка: ${error}` });
+        res.status(INTERNAL_SERVER_ERROR).send({ message: `На сервере произошла ошибка: ${err}` });
       }
     });
 };
