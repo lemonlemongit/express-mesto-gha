@@ -4,23 +4,28 @@
   "description": "[![Tests](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-13-sprint.yml/badge.svg)](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-13-sprint.yml) [![Tests](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-14-sprint.yml/badge.svg)](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-14-sprint.yml)\r # Проект Mesto фронтенд + бэкенд",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node app.js",
+    "lint": "npx eslint .",
+    "dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lemonlemongit/express-mesto-gha.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "lemonlemongit",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/lemonlemongit/express-mesto-gha/issues"
   },
   "homepage": "https://github.com/lemonlemongit/express-mesto-gha#readme",
   "dependencies": {
+    "body-parser": "^1.20.0",
     "express": "^4.18.1"
   },
   "devDependencies": {
+    "eslint": "^8.20.0",
+    "eslint-plugin-react": "^7.30.1",
     "nodemon": "^2.0.19"
   }
 }
