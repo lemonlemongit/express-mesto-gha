@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   // у пользователя есть требования в схеме:
   name: {
     type: String, // имя — это строка
-    required: true,// оно должно быть у каждого пользователя, так что имя — обязательное поле
+    required: true, // оно должно быть у каждого пользователя, так что имя — обязательное поле
     minlength: 2, // минимальная длина имени — 2 символа
     maxlength: 30, // а максимальная — 30 символов
   },
@@ -21,4 +21,4 @@ const userSchema = new mongoose.Schema({
 });
 
 // создаём модель и экспортируем её
-module.exports = mongoose.model("user", userSchema);
+module.exports = mongoose.model('user', userSchema);
