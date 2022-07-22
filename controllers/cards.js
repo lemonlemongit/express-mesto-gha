@@ -1,7 +1,7 @@
 const Card = require('../models/card');
 const {
   OK, BAD_REQUEST, NOT_FOUND, INTERNAL_SERVER_ERROR,
-} = require('../errors.js');
+} = require('../errors');
 
 // создания карточки
 module.exports.createCard = (req, res) => {
