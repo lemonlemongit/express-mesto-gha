@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { NOT_FOUND } = require('./errors');
+const { login, createUser } = require('./controllers/users');
+const auth = require('./middlewares/auth');
 // импортируем роутеры
 const routUsers = require('./routes/users');
 const routcards = require('./routes/cards');
@@ -17,6 +19,10 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
 });
 
+// роуты, не требующие авторизации
+app.post('/signin', login);
+app.post('/signup', createUser);
+
 app.use((req, res, next) => {
   req.user = {
     _id: '62d976bd348bf0b7d1bf5233',
@@ -30,7 +36,7 @@ app.use('/', routcards);
 app.use((req, res) => {
   res.status(NOT_FOUND).send({
     message:
-      'карточка или пользователь не найден или был запрошен несуществующий роут',
+      'был запрошен несуществующий роут',
   });
 });
 

@@ -1,4 +1,6 @@
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+
 const {
   OK,
   BAD_REQUEST,
@@ -122,4 +124,33 @@ module.exports.updateAvatar = (req, res) => {
           .send({ message: `На сервере произошла ошибка: ${err}` });
       }
     });
+};
+
+// проверит email, password? ок => создаст токен
+module.exports.login = (req, res) => {
+  const { email, password } = req.body;
+  User.findUserByCredentials(email, password)
+    .then((user) => {
+      const token = jwt.sign({
+        _id: user._id,
+      }, 'some-secret-key', { expiresIn: '7d' });
+      res.send({ token });
+    })
+    .catch((err) => {
+      res
+        .status(401)
+        .send({ message: ` Error/Ошибка: ${err}` });
+    });
+};
+
+// получение информации о пользователе
+module.exports.getUserInfo = (req, res, next) => {
+  User.findById(req.user._id)
+    .then((user) => {
+      if (!user) {
+        res.status(NOT_FOUND).send({ message: 'Пользователь не найден' });
+      }
+      res.send({ data: user });
+    })
+    .catch(next);
 };
