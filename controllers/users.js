@@ -38,7 +38,7 @@ module.exports.getUsers = (req, res, next) => {
     .catch((err) => next(err));
 };
 
-// возвращает пользователя по _id
+// возвращает пользователя по id
 module.exports.getUserById = (req, res, next) => {
   User.findById(req.params.userId)
     .then((user) => {
