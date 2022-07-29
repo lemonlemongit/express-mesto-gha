@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -10,9 +11,12 @@ const userSchema = new mongoose.Schema({
   link: {
     type: String,
     required: true,
+    validate: {
+      validator: (v) => validator.isURL(v),
+    },
   },
   owner: {
-    type: String, // тип ObjectId
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: 'user', // имя модели на которую ссылаемся
   },

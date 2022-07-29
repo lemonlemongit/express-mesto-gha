@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { errors, celebrate, Joi } = require('celebrate');
-const { regexp } = require('./regexp');
+const { regexp } = require('./regexp/regexp');
 // const { NOT_FOUND } = require('./errors');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
@@ -50,7 +50,7 @@ app.post(
 // роуты, требующие авторизации
 app.use(auth);
 app.use('/users', routUsers);
-app.use('/', routcards);
+app.use('/cards', routcards);
 app.all('*', routError);
 app.use(errors());
 

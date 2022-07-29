@@ -35,7 +35,7 @@ module.exports.createUser = (req, res, next) => {
 // возвращает всех пользователей
 module.exports.getUsers = (req, res, next) => {
   User.find({})
-    .then((userList) => res.status(200).send(userList))
+    .then((userList) => res.send(userList))
     .catch((err) => next(err));
 };
 
@@ -44,11 +44,18 @@ module.exports.getUserById = (req, res, next) => {
   User.findById(req.params.userId)
     .then((user) => {
       if (!user) {
-        throw new NotFound('Такого пользователя нет');
+        next(new NotFound('Такого пользователя нет'));
+      } else {
+        res.send({ data: user });
       }
-      res.send({ data: user });
     })
-    .catch(next);
+    .catch((error) => {
+      if (error.name === 'CastError') {
+        next(new BadRequest('Невалидный id'));
+      } else {
+        next(error);
+      }
+    });
 };
 
 // обновляет профиль
@@ -109,9 +116,7 @@ module.exports.login = (req, res, next) => {
       }, 'some-secret-key', { expiresIn: '7d' });
       res.send({ token });
     })
-    .catch(() => {
-      next(new Unauthorized('Вы ввели неверные данные'));
-    });
+    .catch(next);
 };
 
 // получение информации о пользователе
