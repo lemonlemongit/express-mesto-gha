@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcrypt');
+const Unauthorized = require('../errors/error401');
 
 const userSchema = new mongoose.Schema({
   // у пользователя есть требования в схеме:
@@ -35,8 +37,26 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     select: false,
+    minlength: 2,
   },
 });
+
+// eslint-disable-next-line func-names
+userSchema.statics.findUserByCredentials = function func(email, password) {
+  return this.findOne({ email }).select('+password')
+    .then((user) => {
+      if (!user) {
+        throw new Unauthorized('Неправильные почта или пароль1');
+      }
+      return bcrypt.compare(password, user.password)
+        .then((matched) => {
+          if (!matched) {
+            throw new Unauthorized('Неправильные почта или пароль2');
+          }
+          return user;
+        });
+    });
+};
 
 // создаём модель и экспортируем её
 module.exports = mongoose.model('user', userSchema);
