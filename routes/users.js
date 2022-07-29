@@ -12,10 +12,11 @@ const {
 } = require('../controllers/users');
 
 // router.post('/users', createUser);
-router.get('/users', getUsers);
+router.get('/', getUsers);
+router.get('/me', getUserInfo);
 
 router.get(
-  '/users/:userId',
+  '/:userId',
   celebrate({
     params: Joi.object().keys({
       userId: Joi.string().required().hex().length(24),
@@ -25,7 +26,7 @@ router.get(
 );
 
 router.patch(
-  '/users/me',
+  '/me',
   celebrate({
     body: Joi.object().keys({
       name: Joi.string().min(2).max(30),
@@ -36,7 +37,7 @@ router.patch(
 );
 
 router.patch(
-  '/users/me/avatar',
+  '/me/avatar',
   celebrate({
     body: Joi.object().keys({
       avatar: Joi.string().regex(regexp),
@@ -44,7 +45,5 @@ router.patch(
   }),
   updateAvatar,
 );
-
-router.get('/user/me', getUserInfo);
 
 module.exports = router;

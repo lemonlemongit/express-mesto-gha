@@ -49,7 +49,7 @@ app.post(
 
 // роуты, требующие авторизации
 app.use(auth);
-app.use('/', routUsers);
+app.use('/users', routUsers);
 app.use('/', routcards);
 app.all('*', routError);
 app.use(errors());
